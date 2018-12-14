@@ -1,0 +1,35 @@
+
+
+
+
+
+
+
+
+STOPPED AT 156 in WINDOW.CPP on Function pointers for the Callback system.
+
+
+Window Class
+- KEYBOARD
+Keystates      Returns True/False if the Given KeyCode is pressed
+
+-- MOUSE
+----Angle
+----Speed
+
+----Position
+------X
+------Y
+
+----Velocity
+------X
+------Y
+
+----Button
+------Letf
+------Right
+------Center
+
+
+
+

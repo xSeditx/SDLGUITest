@@ -1,0 +1,1179 @@
+#pragma once
+#define SDL_MAIN_HANDLED
+#define _SDL_
+
+#include<C:\Users\Curt\Documents\Visual Studio 2012\Libraries\SDL2\include\sdl.h>
+#include <iostream>
+#include <chrono>
+#include <vector>
+
+
+
+
+
+
+/* Constants rounded for 21 decimals. */
+#define M_E 2.71828182845904523536
+#define M_LOG2E 1.44269504088896340736
+#define M_LOG10E 0.434294481903251827651
+#define M_LN2 0.693147180559945309417
+#define M_LN10 2.30258509299404568402
+#define M_PI 3.14159265358979323846
+#define M_PI_2 1.57079632679489661923
+#define M_PI_4 0.785398163397448309616
+#define M_1_PI 0.318309886183790671538
+#define M_2_PI 0.636619772367581343076
+#define M_1_SQRTPI 0.564189583547756286948
+#define M_2_SQRTPI 1.12837916709551257390
+#define M_SQRT2 1.41421356237309504880
+#define M_SQRT_2 0.707106781186547524401
+
+
+
+
+
+
+
+
+
+
+#define Print(x)                  std::cout << (x) << std::endl
+#define GetRandom( min, max )     ((rand() % (int)(((max) + 1) - (min))) + (min))  
+#define RANDOM(x)                 ((rand() * (1.0 / (1.0 + RAND_MAX))) * (x))
+#define RANDOM_RANGE(x)           (RANDOM(x * 2) - (x))
+
+#ifdef RGB
+#undef RGB
+#endif
+
+#define RGB(r,g,b)                ((int)(b) + ((int)(g)<< 8) + ((int)(r) << 16))
+#define RADIANS(angle)            ((angle) * .0174532925199444)
+
+#define LOOP(x)                   for(int count = 0; count < (x); count++)
+#define FOR_LOOP(x,c)             for(int (x) = 0; (x) < (c); (x)++)
+
+#define SCREENWIDTH        1280 //680 
+#define SCREENHEIGHT       960 //460 
+
+#define _LOOP_GAME  LOOP_GAME()        // This is being done for future compatibility with various Graphics Libraries
+#define _CLS              CLS()        //
+#define _SYNC            SYNC()        //
+
+#define _COS(a)        cos(RADIANS(a))  //   Cos[(int)a] // 
+#define _SIN(a)        sin(RADIANS(a)) //  Sin[(int)a] //
+
+#define MIN(a,b) ((a<b) ? a : b)
+#define MAX(a,b) ((a>b) ? a : b)
+
+
+#define PICK_ONE(a,b)          ((RANDOM(1) > .5) ? a : b)
+
+#define Speed_Test(x)     \
+    float Timer = SDL_GetTicks();  \
+    x  \
+       \
+    std::cout << "Speed:" << SDL_GetTicks() - Timer << std::endl;
+                        
+
+extern float Cos[360], 
+             Sin[360]; 
+extern float _SQRT[1000];
+                     
+class Window{
+
+public:
+	Window();~Window();
+	Window(int,int,int,int,char*);
+
+
+	 int       X,
+	       	   Y,
+		       WIDTH,
+		       HEIGHT;
+
+	 char     *TITLE;
+
+
+     SDL_Window             *HWND;
+	 SDL_Texture            *BACK_BUFFER;
+     SDL_Renderer           *RENDER;
+
+	 Uint32                  *WINDOW_PIXELS;
+
+	 Uint32                  WINDOW_FORMAT; 
+	 SDL_Event               EVENT;
+	 SDL_Surface            *WINDOW_SURFACE;
+	 SDL_PixelFormat        *MAPPING_FORMAT;
+	 SDL_Point               MOUSE_POSITION,
+                             MOUSE_VELOCITY;
+
+     SDL_Surface            *FONT_SURFACE;
+     SDL_Texture            *FONT_TEXTURE;
+     int FONT_SET[96*256];
+
+
+     double                  MOUSE_ANGLE;
+     struct{
+         bool LEFT,
+             RIGHT;
+     }MOUSE_BUTTON;
+
+     unsigned long           DRAW_COLOR;
+	 float  FPS;
+     void SET_DRAW_COLOR     (unsigned long Col);
+
+     double TIME;
+
+    int   FRAME_COUNTER;
+    int   CYCLE_COUNTER;
+
+    int   CyclePerSecond;
+
+   
+    float CYCLE_TIMER;
+	float TIMER;
+
+    inline void  Set_Sync_rate(float rate){
+ 
+        Sync_rate = rate;
+    }
+    inline float Get_Sync_rate(){return Sync_rate;}
+private:
+    
+    float Sync_rate;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public:
+
+    void      SYNC               ();
+    void      CLS                ();
+    void      PRINT_SCREEN       (char *text);
+    void      SET_PIXEL          (int, int, Uint32);
+    void      SET_PIXELII        (int, int, Uint32);
+    void      SET_DRAW_COLOR     (unsigned long Col);
+    void      LINE               (int x1,int y1,int x2,int y2);
+    void      LINE2              (int x,int y, float Angle,int Length);
+    void      CIRCLE             (int x, int y, float radius);
+    void      FILLED_CIRCLE      (int x, int y, float radius);
+    void      BOX                (int X1, int Y1, int X2, int Y2);
+    void      FILLED_BOX         (int X1, int Y1, int X2, int Y2);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+};
+ 
+
+extern   int       KEYBOARD_HANDLER   (SDL_Keycode sym);
+
+extern   float     NEWX               (float x,float dist,float angle);
+extern   float     NEWY               (float y,float dist,float angle);
+                    
+extern   void      SYNC               ();
+extern   void      CLS                ();
+extern   void      PRINT_SCREEN       (char *text);
+extern   void      SET_PIXEL          (int, int, Uint32);
+extern   void      SET_PIXELII        (int, int, Uint32);
+extern   void      SET_DRAW_COLOR     (unsigned long Col);
+extern   void      LINE               (int x1,int y1,int x2,int y2);
+extern   void      LINE2              (int x,int y, float Angle,int Length);
+extern   void      CIRCLE             (int x, int y, float radius);
+extern   void      FILLED_CIRCLE      (int x, int y, float radius);
+extern   void      BOX                (int X1, int Y1, int X2, int Y2);
+extern   void      FILLED_BOX         (int X1, int Y1, int X2, int Y2);
+
+extern   float     FindAngle          (SDL_Point A, SDL_Point B);
+
+extern   bool      Is_CLICK           (int X, int Y);
+
+extern   bool      LOOP_GAME          ();
+extern   bool      SET_ACTIVE_WINDOW  (WINDOW *active);                  
+
+extern   WINDOW   *SCREEN; 
+extern   int       WINDOW_OFFSET;
+extern   int       LEFT_BOUNDS;
+extern   int       TOP_BOUNDS;
+extern   int       RIGHT_BOUNDS;
+extern   int       BOTTOM_BOUNDS;
+
+
+
+extern inline int MODULO(int x, int n);
+extern float FAST_SQRT(float X);
+
+
+extern void PRINT_FONT(char*);
+
+
+
+//                                                                                                                                                                                                                                                                                                                                       
+//                                                                                                                                                                                                                                                                                                                                       
+//        SDL FRAMEWORK FOR GRAPHICS OPERATIONS                                                                                                                                                                                                                                                                                                                        
+//                                                                                                                                                                                                                                                                                                                                       
+//                                                                                                                                                                                                                                                                                                                                       
+//                                                                                                                                                                                                                                                                                                                                       
+//                                                                                                                                                                                                                                                                                                                                       
+// TARGET: WINDOW *SCREEN pointer. This is where all functions read from and draw to.   
+//
+// TODO: Fix the KEYBOARD Handler so that a callback class is made and various functions can be added to the 
+// callback Vector 
+// Change the structure of the Mouse information in the class so its called MOUSE.Position Angle etc... etc
+//=====================================================================================================================                                                                                                                                                                                                                                                                                                                                      
+
+
+#include"window.h"
+#include<windows.h>
+#include<iostream>
+#include<vector>
+
+#define __DEBUG_
+
+WINDOW *SCREEN ={0};
+int WINDOW_OFFSET = 1;
+int LEFT_BOUNDS = 0 + WINDOW_OFFSET;
+int TOP_BOUNDS = 0 + WINDOW_OFFSET;
+int RIGHT_BOUNDS = SCREENWIDTH - WINDOW_OFFSET;
+int BOTTOM_BOUNDS = SCREENHEIGHT - WINDOW_OFFSET;
+
+float Cos[360];// = {0}, 
+float Sin[360]; // = {0};
+float _SQRT[1000];
+
+// CONSTRUCTS A BASIC WINDOW AND BACKBUFFER ASSOCIATED WITH WINDOW
+WINDOW::~WINDOW(){}
+WINDOW::WINDOW(int x,int y,int width,int height,char *title)
+      : 
+      X(x),
+      Y(y),
+      WIDTH(width),
+      HEIGHT(height),
+      TITLE( title)
+
+{
+
+        MOUSE_VELOCITY.y = MOUSE_VELOCITY.x =0;
+        MOUSE_ANGLE = 0;
+
+        if(SDL_Init(SDL_INIT_VIDEO) !=0) Print("Init Video Error");
+        HWND = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, 
+                                       SDL_WINDOWPOS_UNDEFINED, 
+                                       WIDTH, 
+                                       HEIGHT, 0); 
+        if(!HWND)Print("ERROR: Initializing SDL Window");
+
+        RENDER = SDL_CreateRenderer(HWND, -1, SDL_RENDERER_ACCELERATED);                                                           if(!RENDER)                     std::cout << "ERROR: Initializing SDL Renderer" << std::endl;
+            
+        if(SDL_SetRenderDrawColor(RENDER, 0, 0, 0, 255) != 0)Print("Set Color Error");
+        
+        BACK_BUFFER  = SDL_CreateTexture(RENDER, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
+        
+
+        SDL_SetRenderTarget(RENDER, BACK_BUFFER);
+        SDL_SetWindowResizable(HWND, SDL_TRUE);
+        
+        WINDOW_SURFACE   = SDL_GetWindowSurface     (HWND);
+        WINDOW_FORMAT    = SDL_GetWindowPixelFormat (HWND);
+        
+        WINDOW_PIXELS = new Uint32[WIDTH * (HEIGHT + 400) + 1];
+        memset(WINDOW_PIXELS, 255, WIDTH * HEIGHT * sizeof(Uint32)); 
+
+        FRAME_COUNTER=0;
+        CYCLE_COUNTER=0;
+        FPS =0;
+        CyclePerSecond=0;
+
+       LOOP(360){
+         Cos[count] = cos(RADIANS(count));
+         Sin[count] = sin(RADIANS(count));
+       }
+       Sync_rate = 0;
+       LOOP(1000){
+            _SQRT[count] = sqrt(count);
+       }
+       TIMER = SDL_GetTicks();
+  //  for(int Angle =0; Angle > 360; Angle++)Cos[360] = cos(RADIANS(Angle));
+  //  for(int Angle =0; Angle > 360; Angle++)Sin[360] = sin(RADIANS(Angle));
+       SDL_ClearError();
+       FONT_SURFACE =  SDL_LoadBMP("Font.BMP");
+       SET_ACTIVE_WINDOW(this);
+
+
+ 
+
+       if(!FONT_SURFACE){
+               
+    		    Print("Fonts Can not be loaded");
+                Print("Error", Print(SDL_GetError()));
+    	}
+    
+    	FONT_TEXTURE = SDL_CreateTextureFromSurface(SCREEN->RENDER,FONT_SURFACE);
+    	if(!FONT_TEXTURE){
+    		    Print("Fonts Can not be made.");
+    	}
+
+
+
+
+
+}
+
+
+
+
+bool LOOP_GAME()
+ {
+
+     	SCREEN->CYCLE_COUNTER++;
+         float delta = SDL_GetTicks() - SCREEN->CYCLE_TIMER;
+        
+
+         if(delta < (1000 / SCREEN->Get_Sync_rate())){
+          SDL_Delay((1000 / SCREEN->Get_Sync_rate()) - delta);
+        }
+
+
+	     SCREEN->CyclePerSecond = 1000 / delta ;
+  
+		SCREEN->CYCLE_TIMER = SDL_GetTicks();
+ 
+
+	    bool leftMouseButtonDown = false;
+  		SDL_PollEvent(&SCREEN->EVENT);
+        switch (SCREEN->EVENT.type)
+        {
+                case SDL_QUIT:
+	          	        return 0;
+                break;
+	    
+                case SDL_MOUSEBUTTONUP:
+                        if (SCREEN->EVENT.button.button == SDL_BUTTON_LEFT)
+                                leftMouseButtonDown = false;
+                         SCREEN->MOUSE_BUTTON.LEFT = false;
+                        if (SCREEN->EVENT.button.button == SDL_BUTTON_RIGHT)
+                        SCREEN->MOUSE_BUTTON.RIGHT = false;
+                        break;
+                case SDL_MOUSEBUTTONDOWN:
+                        if (SCREEN->EVENT.button.button == SDL_BUTTON_LEFT)
+                        SCREEN->MOUSE_BUTTON.LEFT = true;
+
+                        if (SCREEN->EVENT.button.button == SDL_BUTTON_RIGHT)
+                        SCREEN->MOUSE_BUTTON.RIGHT = true;
+                case SDL_MOUSEMOTION:
+                                //int mouseX = SCREEN->EVENT.motion.x;
+                                //int mouseY = SCREEN->EVENT.motion.y;
+
+                                SDL_Point DELTA;
+                                DELTA.x = SCREEN->EVENT.motion.x;
+                                DELTA.y = SCREEN->EVENT.motion.y;
+                                
+                                SCREEN->MOUSE_VELOCITY.x = SCREEN->EVENT.motion.x - SCREEN->MOUSE_POSITION.x;
+                                SCREEN->MOUSE_VELOCITY.y = SCREEN->EVENT.motion.y - SCREEN->MOUSE_POSITION.y;
+
+                                SCREEN->MOUSE_ANGLE = FindAngle(SCREEN->MOUSE_POSITION, DELTA);
+
+								SCREEN->MOUSE_POSITION.x = SCREEN->EVENT.motion.x;
+								SCREEN->MOUSE_POSITION.y = SCREEN->EVENT.motion.y;
+
+                break;
+	            case SDL_KEYDOWN:
+//#ifdef KEYBOARD_HANDLER;
+					         //  KEYBOARD_HANDLER(SCREEN->EVENT.key.keysym.sym);
+//#endif
+				break;
+        }
+ return true;
+ }
+void CLS(){
+ 
+      
+        float delta = SDL_GetTicks() - SCREEN->TIMER;
+
+		    SCREEN->FPS = 1000 / delta ;//SDL_GetTicks() - SCREEN->TIMER/1000 ;////SCREEN->FRAME_COUNTER ;// / (
+			SCREEN->TIMER = SDL_GetTicks();
+
+                //SDL_RenderClear(SCREEN->RENDER);
+				memset(SCREEN->WINDOW_PIXELS, 0, SCREEN->WIDTH * SCREEN->HEIGHT * sizeof(Uint32)); 
+
+}
+void SYNC(){
+        float delta = SDL_GetTicks() - SCREEN->TIMER;
+ 
+    	SDL_UpdateTexture(SCREEN->BACK_BUFFER, NULL, SCREEN->WINDOW_PIXELS, SCREEN->WIDTH * sizeof(Uint32)); // SLOW
+        SDL_RenderCopy(SCREEN->RENDER, SCREEN->BACK_BUFFER, NULL, NULL);
+        SDL_RenderPresent(SCREEN->RENDER);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+bool SET_ACTIVE_WINDOW(WINDOW *active)
+{
+	SCREEN = active;
+	return 1;
+}
+
+
+void LOCK_PIXELS(){
+	int   PITCH;
+	void *PIXELS;
+	SDL_LockTexture(SCREEN->BACK_BUFFER, NULL, &PIXELS,  &PITCH);
+}
+void UNLOCK_PIXELS(){
+	SDL_UnlockTexture(SCREEN->BACK_BUFFER);
+}
+float NEWX(float x,float dist,float angle){
+		return x + dist * cos(RADIANS(angle));
+}
+float NEWY(float y,float dist,float angle){
+		return y + dist * sin(RADIANS(angle));
+}
+void  PRINT_SCREEN(char *text){
+	std::cout << "ERROR YOU HAVE NOT SETUP THE PRINT FUNCTION FOR SDL YET DUMBASS" << std::endl;
+return;
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////// PRIMATIVE DRAWING OPERATIONS ////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//SETS THE DRAWING COLOR FOR ALL PRIMATIVE DRAWING OPERATIONS
+void SET_DRAW_COLOR     (unsigned long Col){
+         SCREEN->DRAW_COLOR = Col;
+}
+
+//  SETTING A PIXELS WITHOUT PROTECTION 
+//                                                            **NOTE** 
+//Currently only overflows in Y direction and much space has been allocated as a buffer to prevent this issue... do not mistake it for being correct value just because it does not overflow
+void SET_PIXEL(int x, int y, Uint32 COLOR)
+{
+	SCREEN->WINDOW_PIXELS[(y * SCREEN->WIDTH) + x] = COLOR;                	                                     //((Uint32*)pixels)[ x + ( y * SCREEN_WIDTH ) ] = SDL_MapRGB(fmt, 255, 0, 0);
+}
+ 
+//SETS A PIXEL WITH BOUNDS CHECKING FOR THE SCREEN
+void SET_PIXELII(int x, int y, Uint32 COLOR){
+
+#if 0
+    while (x < 0)x += SCREENWIDTH;
+    while (x >= SCREENWIDTH)x -= SCREENWIDTH;
+    
+    while (y < 0)y += SCREENHEIGHT;
+    while (y > SCREENHEIGHT)y -= SCREENHEIGHT;
+#else
+  //  if(x < SCREENWIDTH) x
+  // if(x > 0){ 
+  //     x %= (SCREENWIDTH); 
+  //
+  // }else{
+  //   // while (x < 0)x += SCREENWIDTH;
+  //             x = MODULO( x, SCREENWIDTH);
+  // }
+  // if(y > 0){
+  //     y %= (SCREENHEIGHT);
+  // }else{
+  //  //  while (y < 0)y += SCREENHEIGHT;
+  //             y = MODULO(y, SCREENHEIGHT);
+  // }
+           x = MODULO(x, SCREENWIDTH);
+           y = MODULO(y, SCREENHEIGHT);
+#endif
+	SCREEN->WINDOW_PIXELS[((y) * SCREEN->WIDTH) + (x)] = COLOR;
+}
+
+void FILLED_BOX(int X1, int Y1, int X2, int Y2){
+  double xt,yt,xb,yb;
+
+  if (X1 < X2){xt = X1;xb = X2;}else{xt = X2;xb = X1;}
+  if (Y1 < Y2){yt = Y1;yb = Y2;}else{yt = Y2;yb = Y1;}
+
+    for(int y = yt; y < yb;y++){
+        LINE(xt,y,xb,y);
+    }
+}
+
+void BOX(int X1, int Y1, int X2, int Y2){
+    LINE(X1,Y1,X1,Y2);
+    LINE(X1,Y2,X2,Y2);
+    LINE(X2,Y2,X2,Y1);
+    LINE(X2,Y1,X1,Y1);
+}
+
+void CIRCLE(int x, int y, float radius){
+    float X1 = x + .5,Y1 =  + .5;
+       for (float Angle =0;Angle < 360; Angle++){
+           X1 = x + radius * _COS((int)Angle);
+           Y1 = y + radius * _SIN((int)Angle);
+               SET_PIXELII(X1,Y1, SCREEN->DRAW_COLOR);
+       }
+}
+
+void FILLED_CIRCLE(int x, int y, float radius){
+    float X1 = x ,Y1 = y ;
+    unsigned long color = SCREEN->DRAW_COLOR;
+     for(float r = 0;r < radius;r++){
+         float Theta = (360 / (8 * r));
+       for (float Angle =0;Angle < 360; Angle+= Theta){
+           X1 = x + r * _COS((int)(Angle));    //X1 = x + r * cos(RADIANS(Angle));
+           Y1 = y + r * _SIN((int)(Angle));    //Y1 = y + r * sin(RADIANS(Angle));
+
+           SET_PIXELII(X1,Y1, color);
+       }
+     }
+}
+
+void LINE2(int x,int y, float Angle,int Length){
+         float Xpos = x,Ypos = y; 
+         unsigned long color = SCREEN->DRAW_COLOR;
+     LOOP(Length){
+          Xpos += _COS((int)(Angle)),
+          Ypos += _SIN((int)(Angle));
+          SET_PIXELII(Xpos,Ypos,color);
+     }
+}
+
+void LINE(int x1,int y1,int x2,int y2)
+{
+ int x,y,dx,dy,dx1,dy1,px,py,xe,ye,i;
+ dx=x2-x1; dy=y2-y1;
+ dx1=abs(dx); dy1=abs(dy); //fabs
+ px=2*dy1-dx1; py=2*dx1-dy1;
+
+ long c = SCREEN->DRAW_COLOR; //RGB(155,155,55);
+
+ if(dy1<=dx1){
+      if(dx>=0){
+           x=x1; y=y1;
+           xe=x2;
+      }else{
+           x=x2; y=y2;
+           xe=x1;
+      }
+      SET_PIXELII(x,y,c);
+      for(i=0;x<xe;i++){
+           x=x+1;
+           if(px<0){
+                px=px+2*dy1;
+           }else{
+            if((dx<0 && dy<0) || (dx>0 && dy>0)){
+                 y=y+1;
+            }else{
+                 y=y-1;
+            }
+            px=px+2*(dy1-dx1);
+           }
+           SET_PIXELII(x,y,c);
+      }
+ }else{
+  if(dy>=0){
+       x=x1;
+       y=y1;
+       ye=y2;
+  }else{
+       x=x2;
+       y=y2;
+       ye=y1;
+  }
+  SET_PIXELII(x,y,c);
+  for(i=0;y<ye;i++){
+       y=y+1;
+       if(py<=0){
+             py=py+2*dx1;
+       }else{
+        if((dx<0 && dy<0) || (dx>0 && dy>0)){
+             x=x+1;
+        }else{
+             x=x-1;
+        }
+             py=py+2*(dx1-dy1);
+       }
+       SET_PIXELII(x,y,c);
+  }
+ }
+}
+
+
+void PRINT_FONT(char*text){
+
+}
+// Checks an area 10x10 to see if the mouse is in that area. Fix it in the future to truly return if the mouse is currently clicked
+
+
+
+/// https://gamedev.stackexchange.com/questions/63617/altering-pixel-value-in-an-sdl2-texture
+/// Why you are locking the texture? You shoudn't access texture memory directly, in general accessing GPU memory has low performance. 
+///	You should work with SDL_Surface all time then use SDL_UpdateTexture(sdlTexture, NULL, pSurface->pixels, pSurface->pitch); 
+/// when your drawing is done, and finally call SDL_RenderCopy(renderer, pTexture, NULL, NULL);
+
+//void *pixels;
+//int pitch;
+//SDL_PixelFormat *fmt;
+//Uint32 format = SDL_GetWindowPixelFormat(window);
+//fmt = SDL_AllocFormat(format);
+
+//SDL_LockTexture(pTexture, NULL, &pixels, &pitch);
+//((Uint32*)pixels)[ x + ( y * SCREEN_WIDTH ) ] = SDL_MapRGB(fmt, 255, 0, 0);
+//SDL_UnlockTexture(pTexture);
+//SDL_FreeFormat(fmt);
+
+//http://sdl.5483.n7.nabble.com/SDL-UpdateTexture-vs-Locking-td38080.html
+
+
+
+     //   if (delta < fps){SDL_Delay(fps - delta);Print(delta);}
+       // if ((delta * 1000) < fps) ; //SDL_Delay(fps - delta); 
+	    //if(SDL_GetTicks() - SCREEN->TIMER > 1000){
+
+
+
+
+//float javidsine(float f)
+//{
+//    float twopi = 2.0f * 3.14159f;
+//    float divpi = 1.0f / twopi;
+//    float s = f * divpi;
+//    float x = s - (int)s;
+//    return y = 9.922029f*x*(2.0f*x*x - 3.0f*x + 1.0f);
+//}
+
+
+
+float FAST_SQRT(float x){
+
+    float xhalf = 0.5f*x;
+    int i = *(int*)&x;
+    i = 0x5f3759df - (i>>1);
+    x = *(float*)&i;
+    x = x*(1.5f - xhalf*x*x);
+    return (1 / x);
+}
+bool Is_CLICK(int X, int Y){
+   if((int)(X) <= SCREEN->MOUSE_POSITION.x + 10 && 
+      (int)(X) >= SCREEN->MOUSE_POSITION.x - 10
+                    &&
+      (int)(Y) <= SCREEN->MOUSE_POSITION.y + 10 &&
+      (int)(Y) >= SCREEN->MOUSE_POSITION.y - 10) return true;
+   return false;
+}
+
+inline int MODULO(int x, int n){ return (x % n + n) % n ;}
+
+
+// RETURNS ANGLE IN DEGREES
+ float FindAngle(SDL_Point A, SDL_Point B)
+{
+    return atan2f(B.y - A.y,B.x - A.x ) / 3.14159 * 180;
+}
+
+
+
+
+
+
+
+
+
+// Checks an area 10x10 to see if the mouse is in that area. Fix it in the future to truly return if the mouse is currently clicked
+
+
+
+/// https://gamedev.stackexchange.com/questions/63617/altering-pixel-value-in-an-sdl2-texture
+/// Why you are locking the texture? You shoudn't access texture memory directly, in general accessing GPU memory has low performance. 
+///	You should work with SDL_Surface all time then use SDL_UpdateTexture(sdlTexture, NULL, pSurface->pixels, pSurface->pitch); 
+/// when your drawing is done, and finally call SDL_RenderCopy(renderer, pTexture, NULL, NULL);
+
+//void *pixels;
+//int pitch;
+//SDL_PixelFormat *fmt;
+//Uint32 format = SDL_GetWindowPixelFormat(window);
+//fmt = SDL_AllocFormat(format);
+
+//SDL_LockTexture(pTexture, NULL, &pixels, &pitch);
+//((Uint32*)pixels)[ x + ( y * SCREEN_WIDTH ) ] = SDL_MapRGB(fmt, 255, 0, 0);
+//SDL_UnlockTexture(pTexture);
+//SDL_FreeFormat(fmt);
+
+//http://sdl.5483.n7.nabble.com/SDL-UpdateTexture-vs-Locking-td38080.html
+
+
+
+     //   if (delta < fps){SDL_Delay(fps - delta);Print(delta);}
+       // if ((delta * 1000) < fps) ; //SDL_Delay(fps - delta); 
+	    //if(SDL_GetTicks() - SCREEN->TIMER > 1000){
+
+
+#if 0
+    while (x < 0)x += SCREENWIDTH;
+    while (x >= SCREENWIDTH)x -= SCREENWIDTH;
+    
+    while (y < 0)y += SCREENHEIGHT;
+    while (y > SCREENHEIGHT)y -= SCREENHEIGHT;
+#else
+  //  if(x < SCREENWIDTH) x
+  // if(x > 0){ 
+  //     x %= (SCREENWIDTH); 
+  //
+  // }else{
+  //   // while (x < 0)x += SCREENWIDTH;
+  //             x = MODULO( x, SCREENWIDTH);
+  // }
+  // if(y > 0){
+  //     y %= (SCREENHEIGHT);
+  // }else{
+  //  //  while (y < 0)y += SCREENHEIGHT;
+  //             y = MODULO(y, SCREENHEIGHT);
+  // }
+
+                      if (SCREEN->Event.key.keysym.sym < 255){
+                        SCREEN->Keyboard.KeyState[SCREEN->Event.key.keysym.sym] == false;
+                                                Print(SCREEN->Event.key.keysym.sym);
+                    }
+
+
+
+
+                 // CallBacks.CallBackOnKeyDown(Uint16 Keycode, Uint16 ScanCode, Uint16 Modifyer, Uint8 rep)
+                   //if (CallBacks.CallBackOnKeyUp   != nullptr) CallBacks.CallBackOnKeyUp(Event.key.keysym, Keyboard.Key.Modifier,  unicode);
+                   //if (CallBacks.CallBackOnKeyDown != nullptr) CallBacks.CallBackOnKeyDown(Event.key.keysym,  Keyboard.Key.Modifier,  unicode);
+
+
+
+
+
+
+
+					        CallBack();
+       ~CallBack();
+       typedef int SDLKey;
+       typedef int SDLMod;
+       void CallBackOnEvent(SDL_Event* Event);
+       void CallBackOnInputFocus();
+       void CallBackOnInputBlur();
+       void CallBackOnKeyDown(int *funcptr, SDLKey sym, SDLMod mod, Uint16 unicode);
+       void CallBackOnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode);
+       void CallBackOnMouseFocus();
+       void CallBackOnMouseBlur();
+       void CallBackOnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle);
+       void CallBackOnMouseWheel(bool Up, bool Down);    //Not implemented
+       void CallBackOnLButtonDown( int mX, int mY)
+       void CallBackOnLButtonUp(int mX, int mY);
+       void CallBackOnRButtonDown(int mX, int mY);
+       void CallBackOnRButtonUp(int mX, int mY);
+       void CallBackOnMButtonDown(int mX, int mY);
+       void CallBackOnMButtonUp(int mX, int mY);
+       void CallBackOnJoyAxis(Uint8 which, Uint8 axis, Sint16 value);
+       void CallBackOnJoyButtonDown(Uint8 which, Uint8 button);
+       void CallBackOnJoyButtonUp(Uint8 which, Uint8 button);
+       void CallBackOnJoyHat(Uint8 which, Uint8 hat, Uint8 value);
+       void CallBackOnJoyBall(Uint8 which, Uint8 ball, Sint16 xrel, Sint16 yrel);
+       void CallBackOnMinimize();
+       void CallBackOnRestore();
+       void CallBackOnResize(int w,int h);
+       void CallBackOnExpose();
+       void CallBackOnExit();
+       void CallBackOnUser(Uint8 type, int code, void* data1, void* data2);
+
+
+
+
+
+
+
+
+
+
+
+
+	   void Widgit::Update()
+{
+  
+}
+
+
+
+
+
+
+
+
+Frame::Frame(Vec2 pos,Vec2 size)
+     : Position(pos),
+       Size(size)
+{
+}
+void Frame::Update()
+{
+    Render();
+}
+void Frame::Render()
+{
+    SCREEN->SET_DRAW_COLOR(RGB(150,150,150));
+    SCREEN->FILLED_BOX(Position.x,Position.y, 
+    Position.x + Size.w, Position.y +Size.h);
+}
+
+
+TextBox::TextBox(Vec2 pos, float width)
+{
+     Position = pos;
+     Size     = Vec2(width, 20);
+}
+void TextBox::Update()
+{
+    Render();
+}
+void TextBox::Render()
+{
+    SCREEN->SET_DRAW_COLOR(RGB(255,255,255));
+    SCREEN->FILLED_BOX(Position.x,Position.y, 
+                    Position.x + Size.w, Position.y +Size.h);
+    SCREEN->SET_DRAW_COLOR(RGB(0,0,0));
+    SCREEN->BOX(Position.x,Position.y, 
+                    Position.x + Size.w, Position.y +Size.h);
+}
+
+
+Button::Button(int x, int y, float height, float width)
+{
+    Position = Vec2(x,y);
+    Size = Vec2(width,height);
+}
+void Button::Update()
+{
+    Render();
+}
+void Button::Render()
+{
+    SCREEN->SET_DRAW_COLOR(RGB(15,15,15));
+    SCREEN->FILLED_BOX(Position.x,Position.y, 
+                       Position.x + Size.w, Position.y +Size.h); 
+}  
+            
+    
+
+
+
+
+
+
+	class Widgit{
+public :
+    Widgit(){}
+    Widgit(HWND parent){}
+   ~Widgit(){}
+        HWND Handle;
+        
+        Vec2 Position;
+        Vec2 Size;
+        Widgit   *Parent;
+        CallBack *CallBacks;
+
+        std::vector<Widgit*> Children;
+        virtual void Update(){}
+
+
+    Widgit*   Make_Button  ( int x, int y, int height, int width);
+    Widgit*   Make_TextBox ( Vec2 topleft, Vec2 size);
+    Widgit*   Make_Frame   ( Vec2 pos,Vec2 size);
+
+};
+
+class Frame : public Widgit{
+public:
+        Frame(){}
+        Frame(HWND parent, Vec2 pos,Vec2 size);
+        void Update();
+};
+
+class TextBox : public Widgit{
+public:
+        TextBox(){}
+        TextBox(HWND parent, Vec2 pos , Vec2  size);
+        void Update();
+};
+
+class Button : public Widgit{
+public:
+        Button(){}
+        Button(HWND parent, Vec2 pos, Vec2 size, LPCSTR text);
+        void Update();
+};
+
+ 
+class GUI{
+public:
+    GUI();
+    GUI(Window &parent);
+   ~GUI();
+    Window *Parent;
+
+    std::vector<Widgit*> Widgits;
+
+    Button*  Make_Button  (HWND parent, int x, int y, int height, int width);
+    TextBox* Make_TextBox (HWND parent, Vec2 topleft, Vec2 size);
+    Frame*   Make_Frame   (HWND parent, Vec2 pos,Vec2 size);
+
+    void Update();
+
+    int NumberOfWidgits;
+static bool GUI::GUIActive;
+};
+
+
+
+
+//=====================================CPP==========
+
+
+Frame*    GUI::Make_Frame(HWND parent, Vec2 pos,Vec2 size)
+{
+    Frame *TempFrame = new Frame(parent, pos,size);
+    Widgits.push_back(TempFrame);
+    NumberOfWidgits++;
+    return TempFrame;
+}
+
+Button*   GUI::Make_Button(HWND parent, int x, int y, int height, int width)
+{
+    Button *PushButton = new Button(parent, Vec2(x,y), Vec2(width,height),"Text");
+
+    Widgits.push_back(PushButton);
+    return PushButton;
+}
+TextBox*  GUI::Make_TextBox(HWND parent, Vec2 topleft, Vec2 size)
+{
+    TextBox *box = new TextBox(parent, topleft, size);
+
+    Widgits.push_back(box);
+    return box;
+}
+
+
+
+Frame::Frame(HWND parent,  Vec2 pos,Vec2 size)
+{
+ Position =pos;
+ Size = size;
+}
+void Frame::Update()
+{
+}
+TextBox::TextBox(HWND parent, Vec2 pos, Vec2 size)
+{
+     Position = pos;
+     Size     = size;
+
+     HWND Handle = 
+         CreateWindow("TestBox", 
+                      "...",
+                      WS_VISIBLE | WS_CHILD | WS_BORDER | ES_MULTILINE | WS_VSCROLL,
+                      pos.x, pos.y, size.w, size.h,  
+                      Parent->Handle,
+                      NULL, NULL, NULL);
+
+}
+void TextBox::Update()
+{
+}
+Button::Button(HWND parent, Vec2 pos, Vec2 size, LPCSTR text)
+{
+    Position = pos;
+    Size = size;
+     HWND Handle = 
+         CreateWindow("Button", 
+                    text,
+                     WS_VISIBLE | WS_CHILD,
+                     pos.x, pos.y, size.w, size.h, 
+                     Parent->Handle,
+                     NULL, NULL, NULL);
+}
+void Button::Update(){}
+
+
+
+
+
+
+
+
+
+GUI::GUI(Window &parent)
+{
+    parent.SetGUI(this);
+    NumberOfWidgits = 0;
+    this->Parent = &parent;
+}
+GUI::~GUI()
+{
+    for_loop(count,NumberOfWidgits)
+    {
+        delete(Widgits[count]);
+    }
+}
+void GUI::Update()
+{
+    for(auto &W: Widgits)
+    {
+        W->Update();
+    }
+}
+
+
+
+
+
+Widgit*    Widgit::Make_Frame( Vec2 pos,Vec2 size)
+{
+    Frame *TempFrame = new Frame(Parent->Handle,pos,size);
+    Children.push_back(TempFrame);
+
+    return TempFrame;
+}
+
+Widgit*   Widgit::Make_Button(int x, int y, int height, int width)
+{
+    Button *PushButton = new Button(Parent->Handle, Vec2(x,y), Vec2(width,height),"Text");
+
+    Children.push_back(PushButton);
+    return PushButton;
+}
+Widgit*  Widgit::Make_TextBox( Vec2 topleft, Vec2 size)
+{
+    TextBox *box = new TextBox(Parent->Handle, topleft, size);
+
+    Children.push_back(box);
+    return box;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       CreateWindow("Static", 
+                    "Enter Text Here:",
+                     WS_VISIBLE | WS_CHILD | WS_BORDER,
+                        (int)pos.x,  (int)pos.y,
+                        (int)size.x, (int)size.y, 
+                     parent,
+                     NULL, NULL, NULL);
+
+					 
+                                                      
+Widgit *Widgit::MakeButton(Rect dimensions, LPCTSTR text, DWORD style)
+{
+    Widgit *Ret = new Widgit(Parent, "Button", text , dimensions, NULL);
+    Children.push_back(Ret);
+return Ret;
+}
+
+
+
+
+
+//
+//void SDL_WindowsMessageHook(void* userdata,void* hWnd,unsigned int message,Uint64 wParam,Sint64 lParam)
+//{
+//
+//}
+//
+
+
+//SetWindowLong(),  SET A WINPROC
+// CHECK IT OUT, HOW TO LOAD RESOURCE FILES INTO THE PROGRAM TO GENERATE MENSUS
+//https://cboard.cprogramming.com/windows-programming/46069-sdl-windows.html
+
+//SDL_SetWindowsMessageHook
+//
+//
+//void SDL_WindowsMessageHook(void*        userdata,
+//                            void*        hWnd,
+//                            unsigned int message,
+//                            Uint64       wParam,
+//                            Sint64       lParam)
+//where its parameter is:
+//userdata
+//
+//what was passed as userdata to SDL_SetWindowsMessageHook()
+//
+
+//
+//
+//
+//HWND WINAPI CreateWindow(
+//  _In_opt_     LPCTSTR   lpClassName,
+//  _In_opt_     LPCTSTR   lpWindowName,
+//  _In_         DWORD     dwStyle,
+//  _In_         int       x,
+//  _In_         int       y,
+//  _In_         int       nWidth,
+//  _In_         int       nHeight,
+//  _In_opt_     HWND      hWndParent,
+//  _In_opt_     HMENU     hMenu,
+//  _In_opt_     HINSTANCE hInstance,
+//  _In_opt_     LPVOID    lpParam
+//);
+
+
+
+
+//void WidgitEventHandler()
+//{
+//    SDL_SysWMmsg Info;
+//    SDL_GetWindowWMInfo(SCREEN->SDL_HWND, &Info);
+//}
+//
+//
+//
+//void SDL_WindowsMessageHook(void*        userdata,
+//                            void*        hWnd,
+//                            unsigned int message,
+//                            Uint64       wParam,
+//                            Sint64       lParam)
